@@ -1,0 +1,34 @@
+version: '3'
+services:
+   react-app:
+      build:
+      # the directory we need to look into
+         context: .
+      # the name of the docker file to use.
+         dockerfile: Dockerfile.dev
+      ports:
+         - "8000:3000"
+      # volumes allow dynamic loading of .js files into the container.
+      # it does this by creating references in the container to the files in the workspace.
+      volumes:
+      # the first option indicates that node_modules in the container should not be mapped
+      # to any folder in the workspace. As node_modules is populated on every run.
+         - /usr/apps/stery/reactapp/node_modules
+      # indicates that the . (current working directory ) and all its folders would be referenced
+      # from folders within reactapp folder.   
+         - .:/usr/apps/stery/reactapp
+   tests:
+      # service for running tests.      
+      build:
+      # the directory we need to look into
+         context: .
+      # the name of the docker file to use.
+         dockerfile: Dockerfile.dev
+      volumes:
+      # the first option indicates that node_modules in the container should not be mapped
+      # to any folder in the workspace. As node_modules is populated on every run.
+         - /usr/apps/stery/reactapp/node_modules
+      # indicates that the . (current working directory ) and all its folders would be referenced
+      # from folders within reactapp folder.   
+         - .:/usr/apps/stery/reactapp
+      command: ["npm","run","test"]      
