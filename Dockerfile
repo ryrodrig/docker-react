@@ -14,5 +14,6 @@ RUN npm run build
 
 # production deploys to nginx web  container.
 FROM nginx as runphase
+EXPOSE 80
 # copy the /build folder from RUN npm run build to html doc in nginx
 COPY --from=buildphase /usr/apps/stery/reactapp/build /usr/share/nginx/html
